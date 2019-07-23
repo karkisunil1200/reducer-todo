@@ -1,21 +1,26 @@
-import React from 'react';
-import {withFormik, Form, Field} from 'formik';
+import React, {useState} from 'react';
 
-function TodoForm() {
+function TodoForm(props) {
+  const [task, setTask] = useState('');
+
+  const handleChange = event => {
+    setTask(([event.target.name] = event.target.value));
+  };
+
+  const addTask = event => {
+    event.preventDefault();
+    props.add(task);
+  };
+
   return (
     <div>
-      <Form>
-        <label>Add a task</label>
-        <Field name='task' autoComplete='off' />
-      </Form>
+      <form onSubmit={addTask}>
+        <label>Add a task: </label>
+        <input name='task' onChange={handleChange} value={task} />
+        <button>Add task</button>
+      </form>
     </div>
   );
 }
 
-export default withFormik({
-  mapPropsToValue: () => {
-    return {
-      task: ''
-    };
-  }
-})(TodoForm);
+export default TodoForm;

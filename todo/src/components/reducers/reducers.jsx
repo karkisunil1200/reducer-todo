@@ -1,3 +1,7 @@
+export const ADD_TASK = 'ADD_TASK';
+export const TOOGLE = 'TOOGLE';
+export const CLEAR = 'CLEAR';
+
 export const initialState = {
   items: [
     {
@@ -18,6 +22,34 @@ export const initialState = {
   ]
 };
 
-// export const reducer = (state, action) => {
-//     switch(action.type)
-// }
+export const reducer = (state, action) => {
+  console.log(action.payload);
+  switch (action.type) {
+    case ADD_TASK:
+      const newItem = {
+        task: action.payload,
+        completed: false,
+        id: Date.now()
+      };
+      return {
+        ...state,
+        items: [...state.items, newItem]
+      };
+    case TOOGLE:
+      return {
+        ...state,
+        items: state.items.map(item => {
+          if (action.payload === item.id) {
+            return {...item, completed: !item.completed};
+          } else {
+            return item;
+          }
+        })
+      };
+    case CLEAR:
+      return {
+        ...state,
+        items: state.items.filter(item => !item.completed)
+      };
+  }
+};
