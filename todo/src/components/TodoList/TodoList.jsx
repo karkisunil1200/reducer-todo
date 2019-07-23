@@ -2,6 +2,7 @@ import React, {useReducer} from 'react';
 import {initialState, reducer, ADD_TASK, TOOGLE, CLEAR} from '../reducers/reducers';
 import TodoForm from '../TodoForm/TodoForm';
 import List from '../List/List';
+import './todolist.css';
 
 function TodoList(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -18,7 +19,7 @@ function TodoList(props) {
     dispatch({type: CLEAR});
   };
   return (
-    <div>
+    <div className='todolist'>
       {state.items.map(item => {
         return <List key={item.id} toggle={toggle} list={item} />;
       })}
